@@ -1,87 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>form</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Form</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+
+  <!-- Plugin CSS -->
+  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/creative.min.css" rel="stylesheet">
+
 </head>
-<body>
-    <script type="text/javascript">
-        var qi = {q1: 0, q2: 0, q3: 0};
-        var ql = ["q1", "q2", "q3"];
-        var last = "q3";
-        var counter = 0;
-    </script>
-    <script type="text/javascript">
-        function gup(name) {
-            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-            var regexS = "[\\?&]"+name+"=([^&#]*)";
-            var regex = new RegExp(regexS);
-            var results = regex.exec(window.location.href);
-            if(results == null) {
-                return "";
-            } else {
-                return unescape(results[1]);
-            }
-        }
-        function openButton() {
-            $("#" + ql[counter]).prop("disabled", false);
-            $("#next").prop("disabled", false);
-        }
-        function changeInfo() {
-            $("#" + ql[counter]).attr("style", "visibility:hidden");
-            $("#poster").attr("src", "./" + ql[counter]);
-            counter++;
-            $("#" + ql[counter]).attr("style", "visibility:visible");
-            $("#next").prop("disabled", true);
-            if (ql[counter] == last) {
-                $("#send").attr("style", "visibilility:visible");
-                setTimeout(function () {
-                    $("#" + ql[counter]).prop("disabled", false);
-                    $("#next").prop("disabled", false);
-                    $("#send").prop("disabled", true);
-                }, 5000);
-            } else {
-                setTimeout(openButton, 5000);
-            }
-        }
-        function send() {
-            $("form").attr("method", "POST");
-            $("form").attr("action", gup("turkSubmitTo"));
-            $("form").submit();
-        }
-        setTimeout(openButton, 5000);
-    </script>
-    <img id="poster" src="./test.jpg" align="left">
-    <div id="ans_area">
-        <form id="mturk_form" name="mturk_form">
-            <input type="hidden" name="assignmentId">
-            <select id="q1" name="score" disabled>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-            <select id="q2" name="score" style="visibility:hidden" disabled>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-            <select id="q3" name="score" style="visibility:hidden" disabled>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-        </form>
-        <button id="next" onclick="changeInfo()" disabled>Next</button>
-        <button id="send" onclick="send()" style="visibility:hidden" disabled>Send</button>
-    </div>
+<body id="page-top">
+    <header class="masthead text-center text-white d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <script type="text/javascript">
+                        var qi = {q1: 0, q2: 0, q3: 0};
+                        var ql = ["q1", "q2", "q3"];
+                        var last = "q3";
+                        var counter = 0;
+                    </script>
+                    <script type="text/javascript">
+                        function gup(name) {
+                            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+                            var regexS = "[\\?&]"+name+"=([^&#]*)";
+                            var regex = new RegExp(regexS);
+                            var results = regex.exec(window.location.href);
+                            if(results == null) {
+                                return "";
+                            } else {
+                                return unescape(results[1]);
+                            }
+                        }
+                        function openButton() {
+                            $("#" + ql[counter]).prop("disabled", false);
+                            $("#next").prop("disabled", false);
+                        }
+                        function changeInfo() {
+                            $("#" + ql[counter]).attr("style", "visibility:hidden");
+                            $("#poster").attr("src", "./" + ql[counter]);
+                            counter++;
+                            $("#" + ql[counter]).attr("style", "visibility:visible");
+                            $("#next").prop("disabled", true);
+                            if (ql[counter] == last) {
+                                $("#send").attr("style", "visibilility:visible");
+                                setTimeout(function () {
+                                    $("#" + ql[counter]).prop("disabled", false);
+                                    $("#next").prop("disabled", false);
+                                    $("#send").prop("disabled", true);
+                                }, 5000);
+                            } else {
+                                setTimeout(openButton, 5000);
+                            }
+                        }
+                        function send() {
+                            $("form").attr("method", "POST");
+                            $("form").attr("action", gup("turkSubmitTo"));
+                            $("form").submit();
+                        }
+                        setTimeout(openButton, 5000);
+                    </script>
+                    <img id="poster" src="./test.jpg" align="left">
+                    <div id="ans_area">
+                        <form id="mturk_form" name="mturk_form">
+                            <input type="hidden" name="assignmentId">
+                            <select id="q1" name="score" disabled>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                            <select id="q2" name="score" style="visibility:hidden" disabled>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                            <select id="q3" name="score" style="visibility:hidden" disabled>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </form>
+                        <button id="next" onclick="changeInfo()" disabled>Next</button>
+                        <button id="send" onclick="send()" style="visibility:hidden" disabled>Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/creative.min.js"></script>
 </body>
 </html>
