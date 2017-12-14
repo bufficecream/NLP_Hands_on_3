@@ -23,6 +23,8 @@
   <!-- Custom styles for this template -->
   <link href="css/creative.min.css" rel="stylesheet">
 
+  <script src="vendor/jquery/jquery.min.js"></script>
+
 </head>
 <body id="page-top">
     <header class="masthead text-center text-white d-flex">
@@ -32,8 +34,10 @@
                     <script type="text/javascript">
                         var qi = {q1: 0, q2: 0, q3: 0};
                         var ql = ["q1", "q2", "q3"];
-                        var last = "q3";
+                        var genMT = ["a", "b", "c"];
+                        var last = "q2";
                         var counter = 0;
+                        var info = {};
                     </script>
                     <script type="text/javascript">
                         function gup(name) {
@@ -51,21 +55,42 @@
                             $("#" + ql[counter]).prop("disabled", false);
                             $("#next").prop("disabled", false);
                         }
-                        function changeInfo() {
+                        function changeInfo(move) {
                             $("#" + ql[counter]).attr("style", "visibility:hidden");
-                            $("#poster").attr("src", "./" + ql[counter]);
-                            counter++;
-                            $("#" + ql[counter]).attr("style", "visibility:visible");
-                            $("#next").prop("disabled", true);
-                            if (ql[counter] == last) {
-                                $("#send").attr("style", "visibilility:visible");
-                                setTimeout(function () {
-                                    $("#" + ql[counter]).prop("disabled", false);
-                                    $("#next").prop("disabled", false);
-                                    $("#send").prop("disabled", true);
-                                }, 5000);
+                            if (move == 0) {
+                                counter--;
                             } else {
-                                setTimeout(openButton, 5000);
+                                counter++;
+                            }
+                            $("#poster").attr("src", "./img/" + ql[counter] + ".jpg");
+                            $("#title").text("電影名稱(中文):").append("<b>" + info[ql[counter]]["title"] + "</b>");
+                            //$("#abstract").text("電影敘述:").append(info[ql[counter]]["abstract"]);
+                            $("#gen").text("生成電影名稱:").append(genMT[counter]);
+                            $("#" + ql[counter]).attr("style", "visibility:visible");
+                            if (counter == 0) {
+                                $("#prev").attr("style", "visibility:hidden");
+                                $("#next").attr("style", "visibility:visible");
+                                $("#send").attr("style", "visibility:hidden");
+                            } else if (ql[counter] == last) {
+                                $("#prev").attr("style", "visibility:visible");
+                                $("#next").attr("style", "visibility:hidden");
+                                $("#send").attr("style", "visibility:visible");
+                                if ($("#" + ql[counter]).prop("disabled")) {
+                                    setTimeout(function () {
+                                        $("#" + ql[counter]).prop("disabled", false);
+                                        $("#send").prop("disabled", false);
+                                    }, 5000);
+                                }
+                            } else {
+                                $("#prev").attr("style", "visibility:visible");
+                                $("#next").attr("style", "visibility:visible");
+                                $("#send").attr("style", "visibility:hidden");
+                                if ($("#" + ql[counter]).prop("disabled")) {
+                                    setTimeout(function () {
+                                        $("#" + ql[counter]).prop("disabled", false);
+                                        $("#next").prop("disabled", false);
+                                    }, 5000);
+                                }
                             }
                         }
                         function send() {
@@ -73,36 +98,48 @@
                             $("form").attr("action", gup("turkSubmitTo"));
                             $("form").submit();
                         }
+                        $.getJSON("./data.json", function (data) {
+                            info = data;
+                            $("#title").text("電影名稱(中文):").append("<b>" + info["q1"]["title"] + "</b>");
+                            //$("#abstract").text("電影敘述:").append(info["q1"]["abstract"]);
+                            $("#gen").text("生成電影名稱:").append(genMT[counter]);
+                        });
                         setTimeout(openButton, 5000);
                     </script>
-                    <img id="poster" src="./test.jpg" align="left">
-                    <div id="ans_area">
+                    <img id="poster" src="./img/q1.jpg" align="left">
+                    <div id="ans_area" align="middle">
+                        <p id="title">電影名稱(中文):</p>
+                        <p id="abstract">電影敘述:省略</p>
+                        <p id="gen">生成電影名稱:</p>
                         <form id="mturk_form" name="mturk_form">
                             <input type="hidden" name="assignmentId">
-                            <select id="q1" name="score" disabled>
-                                <option value="5">5</option>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                            </select>
-                            <select id="q2" name="score" style="visibility:hidden" disabled>
-                                <option value="5">5</option>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                            </select>
-                            <select id="q3" name="score" style="visibility:hidden" disabled>
-                                <option value="5">5</option>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                            </select>
+                            <p>請給分:
+                                <select id="q1" name="score" disabled>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select>
+                                <select id="q2" name="score" style="visibility:hidden" disabled>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select>
+                                <select id="q3" name="score" style="visibility:hidden" disabled>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select>
+                            </p>
                         </form>
-                        <button id="next" onclick="changeInfo()" disabled>Next</button>
-                        <button id="send" onclick="send()" style="visibility:hidden" disabled>Send</button>
+                        <button id="prev" onclick="changeInfo(0)" style="visibility:hidden">上一部</button>
+                        <button id="next" onclick="changeInfo(1)" disabled>下一部</button>
+                        <button id="send" onclick="send()" style="visibility:hidden" disabled>送出</button>
                     </div>
                 </div>
             </div>
@@ -110,7 +147,6 @@
     </header>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
