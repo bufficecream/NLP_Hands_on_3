@@ -86,10 +86,7 @@
                                 $("#next").attr("style", "visibility:visible");
                                 $("#send").attr("style", "visibility:hidden");
                                 if ($("#" + ql[counter]).prop("disabled")) {
-                                    setTimeout(function () {
-                                        $("#" + ql[counter]).prop("disabled", false);
-                                        $("#next").prop("disabled", false);
-                                    }, 5000);
+                                    setTimeout(openButton, 5000);
                                 }
                             }
                         }
@@ -97,6 +94,7 @@
                             $("form").attr("method", "POST");
                             $("form").attr("action", gup("turkSubmitTo"));
                             $("form").submit();
+                            window.location = "./finish.html";
                         }
                         $.getJSON("./data.json", function (data) {
                             info = data;
