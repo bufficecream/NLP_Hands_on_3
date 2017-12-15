@@ -80,9 +80,9 @@
                                 $("#prev").attr("style", "visibility:visible");
                                 $("#next").attr("style", "visibility:hidden");
                                 $("#send").attr("style", "visibility:visible");
-                                if ($("#" + ql[counter]).prop("disabled")) {
+                                if ($("#" + ql[c]).prop("disabled")) {
                                     t = setTimeout(function () {
-                                        $("#" + ql[counter]).prop("disabled", false);
+                                        $("#" + ql[c]).prop("disabled", false);
                                         $("#send").prop("disabled", false);
                                     }, 5000);
                                 }
@@ -90,11 +90,9 @@
                                 $("#prev").attr("style", "visibility:visible");
                                 $("#next").attr("style", "visibility:visible");
                                 $("#send").attr("style", "visibility:hidden");
-                                if ($("#" + ql[counter]).prop("disabled")) {
-                                    $("#next").prop("disabled", true);
+                                $("#next").prop("disabled", $("#" + ql[c]).prop("disabled"));
+                                if ($("#" + ql[c]).prop("disabled")) {
                                     t = setTimeout(openButton, 5000);
-                                } else {
-                                    $("#next").prop("disabled", false);
                                 }
                             }
                         }
