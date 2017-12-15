@@ -32,12 +32,12 @@
             <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <script type="text/javascript">
-                        var qi = {q1: 0, q2: 0, q3: 0};
-                        var ql = ["q1", "q2", "q3"];
-                        var genMT = ["a", "b", "c"];
-                        var last = "q2";
+                        var ql = ["q1", "q2", "q3", "q4"];
+                        var genMT = ["a", "b", "c", "d"];
+                        var last = "q4";
                         var counter = 0;
                         var info = {};
+                        var t;
                     </script>
                     <script type="text/javascript">
                         function gup(name) {
@@ -56,6 +56,7 @@
                             $("#next").prop("disabled", false);
                         }
                         function changeInfo(move) {
+                            clearTimeout(t);
                             $("#" + ql[counter]).attr("style", "visibility:hidden");
                             if (move == 0) {
                                 counter--;
@@ -67,16 +68,20 @@
                             //$("#abstract").text("電影敘述:").append(info[ql[counter]]["abstract"]);
                             $("#gen").text("生成電影名稱:").append(genMT[counter]);
                             $("#" + ql[counter]).attr("style", "visibility:visible");
-                            if (counter == 0) {
+                            setLayOut(counter);
+                        }
+                        function setLayOut(c) {
+                            if (c == 0) {
                                 $("#prev").attr("style", "visibility:hidden");
                                 $("#next").attr("style", "visibility:visible");
                                 $("#send").attr("style", "visibility:hidden");
-                            } else if (ql[counter] == last) {
+                                $("#next").prop("disabled", false);
+                            } else if (ql[c] == last) {
                                 $("#prev").attr("style", "visibility:visible");
                                 $("#next").attr("style", "visibility:hidden");
                                 $("#send").attr("style", "visibility:visible");
                                 if ($("#" + ql[counter]).prop("disabled")) {
-                                    setTimeout(function () {
+                                    t = setTimeout(function () {
                                         $("#" + ql[counter]).prop("disabled", false);
                                         $("#send").prop("disabled", false);
                                     }, 5000);
@@ -86,7 +91,10 @@
                                 $("#next").attr("style", "visibility:visible");
                                 $("#send").attr("style", "visibility:hidden");
                                 if ($("#" + ql[counter]).prop("disabled")) {
-                                    setTimeout(openButton, 5000);
+                                    $("#next").prop("disabled", true);
+                                    t = setTimeout(openButton, 5000);
+                                } else {
+                                    $("#next").prop("disabled", false);
                                 }
                             }
                         }
@@ -127,6 +135,13 @@
                                     <option value="1">1</option>
                                 </select>
                                 <select id="q3" name="score" style="visibility:hidden" disabled>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select>
+                                <select id="q4" name="score" style="visibility:hidden" disabled>
                                     <option value="5">5</option>
                                     <option value="4">4</option>
                                     <option value="3">3</option>
