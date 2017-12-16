@@ -36,7 +36,7 @@
                         var genMT = ["a", "b", "c", "d"];
                         var last = "q4";
                         var counter = 0;
-                        var info = {};
+                        var info = {"q1": {"title": "古惑仔"}, "q2": {"title": "英雄本色"}, "q3": {"title": "家有喜事"}, "q4": {"title": "警察故事III超級警察"}};
                         var t;
                     </script>
                     <script type="text/javascript">
@@ -103,13 +103,17 @@
                             $("form").submit();
                             window.open('./finish.html', '_blank');
                         }
-                        $.getJSON("./data.json", function (data) {
+                        /*$.getJSON("./data.json", function (data) {
                             info = data;
                             $("#title").text("電影名稱(中文):").append("<b>" + info["q1"]["title"] + "</b>");
                             //$("#abstract").text("電影敘述:").append(info["q1"]["abstract"]);
                             $("#gen").text("生成電影名稱:").append(genMT[counter]);
+                        });*/
+                        $(document).ready(function () {
+                            $("#title").text("電影名稱(中文):").append("<b>" + info["q1"]["title"] + "</b>");
+                            $("#gen").text("生成電影名稱:").append(genMT[counter]);
+                            setTimeout(openButton, 5000);
                         });
-                        setTimeout(openButton, 5000);
                     </script>
                     <img id="poster" src="./img/q1.jpg" align="left">
                     <div id="ans_area" align="middle">
