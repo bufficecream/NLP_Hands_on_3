@@ -38,6 +38,8 @@
                         var counter = 0;
                         var info = {"q1": {"title": "古惑仔"}, "q2": {"title": "英雄本色"}, "q3": {"title": "家有喜事"}, "q4": {"title": "警察故事III超級警察"}};
                         var t;
+                        var cd;
+                        var tl = 5;
                     </script>
                     <script type="text/javascript">
                         function gup(name) {
@@ -52,8 +54,24 @@
                             }
                         }
                         function openButton() {
-                            $("#" + ql[counter]).prop("disabled", false);
-                            $("#next").prop("disabled", false);
+                            tl--;
+                            if (tl > 0) {
+                                t = setTimeout(openButton, 1000);
+                            } else if (tl == 0) {
+                                $("#" + ql[counter]).prop("disabled", false);
+                                $("#next").prop("disabled", false);
+                            }
+                            $("#countDown").text("時間:").append(String(tl));
+                        }
+                        function openLast() {
+                            tl--;
+                            if (tl > 0) {
+                                t = setTimeout(openLast, 1000);
+                            } else if (tl == 0) {
+                                $("#" + ql[counter]).prop("disabled", false);
+                                $("#send").prop("disabled", false);
+                            }
+                            $("#countDown").text("時間:").append(String(tl));
                         }
                         function changeInfo(move) {
                             clearTimeout(t);
@@ -76,15 +94,17 @@
                                 $("#next").attr("style", "visibility:visible");
                                 $("#send").attr("style", "visibility:hidden");
                                 $("#next").prop("disabled", false);
+                                $("#countDown").text("時間:0");
                             } else if (ql[c] == last) {
                                 $("#prev").attr("style", "visibility:visible");
                                 $("#next").attr("style", "visibility:hidden");
                                 $("#send").attr("style", "visibility:visible");
                                 if ($("#" + ql[c]).prop("disabled")) {
-                                    t = setTimeout(function () {
-                                        $("#" + ql[c]).prop("disabled", false);
-                                        $("#send").prop("disabled", false);
-                                    }, 5000);
+                                    tl = 5;
+                                    $("#countDown").text("時間:5");
+                                    t = setTimeout(openLast, 1000);
+                                } else {
+                                    $("#countDown").text("時間:0");
                                 }
                             } else {
                                 $("#prev").attr("style", "visibility:visible");
@@ -92,7 +112,11 @@
                                 $("#send").attr("style", "visibility:hidden");
                                 $("#next").prop("disabled", $("#" + ql[c]).prop("disabled"));
                                 if ($("#" + ql[c]).prop("disabled")) {
-                                    t = setTimeout(openButton, 5000);
+                                    tl = 5;
+                                    $("#countDown").text("時間:5");
+                                    t = setTimeout(openButton, 1000);
+                                } else {
+                                    $("#countDown").text("時間:0");
                                 }
                             }
                         }
@@ -112,11 +136,12 @@
                         $(document).ready(function () {
                             $("#title").text("電影名稱(中文):").append("<b>" + info["q1"]["title"] + "</b>");
                             $("#gen").text("生成電影名稱:").append(genMT[counter]);
-                            setTimeout(openButton, 5000);
+                            setTimeout(openButton, 1000);
                         });
                     </script>
                     <img id="poster" src="./img/q1.jpg" align="left">
                     <div id="ans_area" align="middle">
+                        <p id="countDown">時間:5</p>
                         <p id="title">電影名稱(中文):</p>
                         <p id="abstract">電影敘述:一部電影</p>
                         <p id="gen">生成電影名稱:</p>
